@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Tempo de Liderar · Como reages?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{ --petroleo:#183A4A; --vinho:#5B1E21; --bege:#E8E2D8; --grafite:#2E2E2E; --suave:#F8F7F4; --linha:#d9d3c8; }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ -webkit-text-size-adjust:100%; }
+  body{ background:var(--suave); color:var(--grafite); font-family:'Inter',system-ui,-apple-system,Arial,sans-serif; font-size:17px; line-height:1.5; min-height:100vh; min-height:100dvh; }
+  .app{ max-width:560px; margin:0 auto; padding:20px 20px calc(28px + env(safe-area-inset-bottom)); min-height:100vh; min-height:100dvh; display:flex; flex-direction:column; }
+  header{ display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid var(--linha); }
+  header svg{ height:15px; width:auto; display:block; }
+  header span{ font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--petroleo); }
+  main{ flex:1; display:flex; flex-direction:column; padding-top:28px; }
+  .fio{ width:44px; height:3px; background:var(--vinho); margin-bottom:20px; }
+  .rotulo{ font-size:12px; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:var(--vinho); margin-bottom:10px; }
+  h1{ font-family:'Abhaya Libre',Georgia,serif; font-weight:800; color:var(--petroleo); font-size:44px; line-height:1.02; letter-spacing:-.01em; }
+  h1 em{ font-style:normal; color:var(--vinho); }
+  h2{ font-family:'Abhaya Libre',Georgia,serif; font-weight:700; color:var(--petroleo); font-size:27px; line-height:1.15; }
+  h3{ font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--vinho); margin:18px 0 4px; }
+  p + p{ margin-top:12px; }
+  .lead{ margin-top:18px; }
+  .pontos{ list-style:none; margin-top:20px; border-top:1px solid var(--linha); }
+  .pontos li{ padding:12px 0; border-bottom:1px solid var(--linha); font-size:16px; }
+  .pontos b{ color:var(--petroleo); font-weight:600; }
+  .pequeno{ font-size:14px; color:#5c6b72; }
+  .empurra{ flex:1; min-height:24px; }
+
+  button{ font:inherit; cursor:pointer; -webkit-tap-highlight-color:transparent; }
+  .btn{ display:block; width:100%; background:var(--petroleo); color:var(--suave); border:0; border-radius:10px; padding:17px 20px; font-size:17px; font-weight:600; text-align:center; }
+  .btn:active{ background:#0f2a37; }
+  .btn[disabled]{ opacity:.45; }
+  .btn-vinho{ background:var(--vinho); }
+  .btn-vinho:active{ background:#431417; }
+  .link{ background:none; border:0; color:var(--petroleo); font-size:15px; font-weight:500; text-decoration:underline; text-underline-offset:3px; padding:12px 4px; }
+
+  /* perguntas */
+  .barra{ height:4px; background:var(--bege); border-radius:2px; overflow:hidden; margin-bottom:18px; }
+  .barra i{ display:block; height:100%; background:var(--vinho); transition:width .25s; }
+  .passo{ font-size:12px; font-weight:600; letter-spacing:.16em; color:var(--vinho); margin-bottom:10px; }
+  .opcoes{ margin-top:22px; display:flex; flex-direction:column; gap:10px; }
+  .op{ display:flex; gap:14px; align-items:flex-start; width:100%; text-align:left; background:#fff; border:1.5px solid var(--linha); border-radius:10px; padding:14px 14px; color:var(--grafite); font-size:16px; line-height:1.4; }
+  .op b{ flex:0 0 30px; height:30px; border-radius:50%; background:var(--bege); color:var(--petroleo); font-weight:600; font-size:15px; display:flex; align-items:center; justify-content:center; }
+  .op.sel{ border-color:var(--petroleo); background:#eef2f3; }
+  .op.sel b{ background:var(--petroleo); color:var(--suave); }
+  .nav{ display:flex; justify-content:space-between; align-items:center; margin-top:14px; }
+
+  /* contagem */
+  .contas{ display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:22px; }
+  .conta{ background:#fff; border:1px solid var(--linha); border-radius:10px; padding:14px 6px; text-align:center; }
+  .conta b{ display:block; font-family:'Abhaya Libre',Georgia,serif; font-weight:800; font-size:34px; line-height:1; color:var(--petroleo); }
+  .conta span{ display:block; font-size:13px; color:#5c6b72; margin-top:6px; }
+  .aviso{ margin-top:22px; background:var(--bege); border-left:3px solid var(--vinho); padding:14px 16px; font-size:16px; border-radius:0 8px 8px 0; }
+
+  /* leitura */
+  .estilo{ background:#fff; border:1px solid var(--linha); border-radius:12px; padding:20px 18px 22px; margin-top:18px; }
+  .estilo-topo{ display:flex; align-items:center; gap:16px; padding-bottom:14px; border-bottom:1px solid var(--linha); }
+  .estilo-letra{ font-family:'Abhaya Libre',Georgia,serif; font-weight:800; font-size:76px; line-height:.8; color:var(--vinho); }
+  .estilo-nome{ font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:#5c6b72; }
+  .estilo-verbo{ font-family:'Abhaya Libre',Georgia,serif; font-weight:800; font-size:32px; line-height:1; color:var(--petroleo); margin-top:4px; }
+  .estilo-pergunta{ font-family:'Abhaya Libre',Georgia,serif; font-weight:700; font-size:23px; line-height:1.2; color:var(--vinho); margin-top:18px; }
+  .devolucao{ margin-top:22px; font-size:16px; }
+
+  /* contacto */
+  .contacto{ margin-top:30px; padding-top:26px; border-top:1px solid var(--linha); }
+  label{ display:block; font-size:14px; font-weight:600; color:var(--petroleo); margin:16px 0 6px; }
+  input[type=text],input[type=email],input[type=tel]{ width:100%; font:inherit; font-size:17px; padding:14px; border:1.5px solid var(--linha); border-radius:10px; background:#fff; color:var(--grafite); }
+  input:focus{ outline:2px solid var(--petroleo); outline-offset:1px; }
+  .escolhas{ display:flex; flex-direction:column; gap:8px; }
+  .escolha{ display:flex; gap:12px; align-items:flex-start; background:#fff; border:1.5px solid var(--linha); border-radius:10px; padding:13px 14px; font-size:16px; font-weight:400; color:var(--grafite); margin:0; }
+  .escolha input{ margin-top:4px; accent-color:var(--petroleo); width:18px; height:18px; flex:0 0 18px; }
+  .consente{ display:flex; gap:12px; align-items:flex-start; font-size:14px; font-weight:400; color:var(--grafite); margin:20px 0 18px; }
+  .consente input{ margin-top:2px; accent-color:var(--petroleo); width:20px; height:20px; flex:0 0 20px; }
+  .erro{ color:var(--vinho); font-size:14px; font-weight:500; margin-bottom:12px; }
+  .final{ flex:1; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:24px 0 48px; }
+  .final-letra{ font-family:'Abhaya Libre',Georgia,serif; font-weight:800; font-size:150px; line-height:.85; color:var(--vinho); margin-top:18px; }
+  .final-nome{ font-size:52px; margin-top:6px; }
+  footer{ margin-top:30px; font-size:12px; color:#5c6b72; text-align:center; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <svg viewBox="0 0 325.38 41.33" role="img" aria-label="Vera Portela"><g><path fill="#183a4a" d="M86.09,33.15l-4.64-8.4c-1.55-2.8-3.51-4.81-6.19-6.09,0,0-.25-.16-.52-.24-.18-.08-.37-.15-.56-.23v-.03c6.97-1.3,9.62-4.49,9.62-8.76,0-5.35-3.51-9.08-12.81-9.08H24.97v.81h1.62c2.49,0,3.62,1.24,2.92,3.19l-8.65,24.49L9.51,1.14h4.16V.33H0v.81h3.78l14.54,35.14h.81L30.38,4.33c.81-2.38,1.84-3.19,3.51-3.19h1.69v34.11h-4.81v.81h40.66v-.81h-4.76v-16.6h2.1c7.27,1.17,9.14,10.55,14.11,17.1,4.06,5.34,10.35,7.08,15.98,3.8,2.51-1.47,4.54-3.69,6.07-6.16-2.75,2.58-5.11,4.98-8.48,5.51-4.09.64-8.09-1.63-10.36-5.75ZM61.37,35.25h-4.05c.07-5.43.81-9.89.81-9.89h-.86c-1.14,7.03-1.41,9.89-4.43,9.89h-11.95v-16.43h8.65v5.24h.81v-10.81h-.81v4.76h-8.65V1.14h12.27c1.89,0,2.43.11,2.43,3.46v5.84h.81c.32-4.33,1.03-7.79,1.37-9.3h3.61v34.11ZM71.37,17.84h-3.23c-.59-.02-.99,0-.99,0h-.48V1.14h4.43c5.19,0,6.97,3.03,6.97,8.6s-1.62,8.11-6.7,8.11Z"/><path fill="#183a4a" d="M118.91,35.14L104.59,0h-.81l-12.22,31.95c-.88,2.29-1.77,3.12-3.32,3.18.24.29.48.56.73.82h7.99v-.81h-1.62c-2.49,0-3.68-1.24-2.92-3.19l3.46-9.03h12.43l4.97,12.22h-3.78v.81h12.05v-.81h-2.65ZM96.15,22.11l5.73-14.92,6.11,14.92h-11.84Z"/></g><g><path fill="#183a4a" d="M172.67.07c-8.95,0-13.7,4.89-15.44,11.43.02-.27.03-.55.03-.84,0-5.68-3.35-10.22-14.11-10.22h-13.57v.81h4.81v34.11h-4.81v.81h15.41v-.81h-5.3V1.26h3.41c6.7,0,8.49,3.51,8.49,9.57,0,5.73-1.78,9.84-6.87,9.84-.86,0-1.62-.11-1.62-.11v.81s.65.11,2,.11c5.87,0,10.07-2.68,11.56-7.05-.14,1.12-.21,2.26-.21,3.43,0,10.81,4.11,18.7,16.22,18.7s16.27-8.38,16.27-18.7S184.02.07,172.67.07ZM172.72,35.86c-9.03,0-10.49-7.46-10.49-17.41s1.46-17.68,10.49-17.68,10.43,7.62,10.43,17.68c0,9.19-1.62,17.41-10.43,17.41Z"/><path fill="#183a4a" d="M227.75,39.02c-4.09.64-8.09-1.63-10.36-5.75l-4.64-8.4c-1.55-2.8-3.51-4.81-6.19-6.09,0,0-.25-.16-.52-.24-.18-.08-.37-.15-.56-.23v-.03c6.97-1.3,9.62-4.49,9.62-8.76,0-5.35-3.51-9.08-12.81-9.08h-14.37v.81h4.75v34.11h-4.75v.81h4.75s10.05,0,10.05,0v-.81h-4.76v-16.6h2.1c7.27,1.17,9.14,10.55,14.11,17.1,4.06,5.34,10.35,7.08,15.98,3.8,2.51-1.47,4.54-3.69,6.07-6.16-2.75,2.58-5.11,4.98-8.48,5.51ZM202.66,17.96h-3.23c-.59-.02-.99,0-.99,0h-.48V1.26h4.43c5.19,0,6.97,3.03,6.97,8.6s-1.62,8.11-6.7,8.11Z"/><path fill="#183a4a" d="M322.73,35.37L308.41.23h-.81l-12.22,31.95c-.92,2.38-1.84,3.19-3.51,3.19h-11.63V1.26h4.81V.45h-69.14v3.41c0,1.84-.32,6.7-.32,6.7h.81l.49-4.27c.43-3.95,1.14-5.03,3.68-5.03h7.51v34.11h-4.81v.81h9.51c.34-.26.68-.53,1.02-.81h-.42V1.26h7.51c2.54,0,3.35,1.08,3.68,5.03l.38,4.27h.81s-.22-4.87-.22-6.7V1.26h3.03v34.11h-4.81v.81h57.03v-.81h-1.62c-2.49,0-3.68-1.24-2.92-3.19l3.46-9.03h12.43l4.97,12.22h-3.78v.81h12.05v-.81h-2.65ZM274.94,35.37h-4.64c.07-5.43.81-9.89.81-9.89h-.87c-1.14,7.03-1.41,9.89-4.43,9.89h-11.95v-16.43h8.65v5.24h.81v-10.81h-.81v4.76h-8.65V1.26h12.27c1.89,0,2.43.11,2.43,3.46v5.84h.81c.32-4.33,1.03-7.79,1.37-9.3h4.2v34.11ZM299.98,22.34l5.73-14.92,6.11,14.92h-11.84Z"/><path fill="#183a4a" d="M234.8,36.18h3.38v-.81h-2.73c-.21.28-.43.55-.65.81Z"/></g></svg>
+    <span>Tempo de Liderar</span>
+  </header>
+  <main id="ecra" aria-live="polite"></main>
+  <footer>Exercício de autoperceção inspirado no DISC. Não é um diagnóstico.</footer>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO
+   ============================================================ */
+var CONFIG = {
+  // Endereço do Apps Script que guarda os contactos na folha Google.
+  // Vazio = o formulário aparece mas os dados NÃO são guardados em lado nenhum (só para pré-visualizar).
+  ENDPOINT: "",
+
+
+  // Pergunta qualificadora (PROPOSTA, por validar). null = não aparece.
+  QUALIFICADORA: {
+    pergunta: "Fora do Escutismo, lideras pessoas no teu trabalho?",
+    opcoes: ["Tenho um negócio próprio", "Lidero uma equipa numa empresa ou organização", "Não lidero pessoas no trabalho"]
+  },
+
+  EVENTO: "ERCA Leiria-Fátima 2026"
+};
+
+/* ============================================================
+   CONTEÚDO (guião de facilitação Tempo de Liderar)
+   Código de resposta: A = D, B = I, C = S, D = C
+   ============================================================ */
+var PERGUNTAS = [
+ ["Durante uma expedição, o trilho previsto está bloqueado e o grupo começa a ficar impaciente. O que fazes primeiro?",
+  "Tomo a decisão sobre a alternativa e distribuo as tarefas para voltarmos a avançar.",
+  "Reúno o grupo, explico o novo desafio e procuro recuperar a energia para continuar.",
+  "Verifico como está cada elemento e ajudo o grupo a adaptar-se sem aumentar a tensão.",
+  "Consulto o mapa, o tempo disponível e os riscos antes de escolher outro percurso."],
+ ["Uma criança que nunca acampou diz que tem medo de dormir na tenda. Qual é a tua primeira tendência?",
+  "Dou-lhe uma tarefa simples e concreta para começar a participar já.",
+  "Converso com ela, apresento-lhe alguém da equipa e tento tornar a experiência entusiasmante.",
+  "Fico ao pé dela, escuto o que a preocupa e avanço ao ritmo que consegue tolerar.",
+  "Explico como será a noite, o que está preparado e que opções existem se precisar de ajuda."],
+ ["Dois jovens disputam quem vai ser guia da equipa nesta atividade. O que fazes primeiro?",
+  "Defino rapidamente um critério e atribuo a função para desbloquear a situação.",
+  "Transformo a disputa numa conversa participada e procuro que ambos se envolvam.",
+  "Ouço cada um e tento chegar a uma solução que preserve a relação entre eles.",
+  "Consulto a regra de rotação ou os critérios acordados e aplico-os com clareza."],
+ ["Num percurso, um jovem diz que não consegue continuar e quer abandonar a caminhada. Qual é o teu primeiro passo?",
+  "Avalio a situação e decido com firmeza se o grupo continua, abranda ou muda de plano.",
+  "Converso com o jovem, divido o percurso em pequenas metas e incentivo o grupo, atento a sinais de risco.",
+  "Paro para perceber como ele se sente e organizo apoio sem o deixar isolado.",
+  "Verifico distância, tempo, água, sinais físicos e condições do percurso antes de decidir."],
+ ["Um jovem ignora uma instrução de segurança perto de uma fogueira ou curso de água. Depois de interromper a situação e garantir a segurança, qual é a tua tendência?",
+  "Dou uma instrução direta e inequívoca sobre o limite e o que fazer agora.",
+  "Envolvo o grupo numa explicação clara do risco e mobilizo-o para cumprir a regra.",
+  "Falo com o jovem com calma, confirmo que está seguro e ajudo-o a compreender o impacto.",
+  "Confirmo o procedimento aplicável e explico com precisão o limite e a razão para o cumprir."],
+ ["A equipa não está a seguir as indicações do jovem que foi escolhido como guia. Como reages?",
+  "Reforço a autoridade do guia e digo ao grupo o que tem de fazer agora.",
+  "Reúno a equipa e recupero o espírito de grupo e o objetivo comum.",
+  "Ajudo o guia a ouvir a equipa e a manter a cooperação sem ficar sozinho.",
+  "Clarifico a função do guia, as decisões que lhe cabem e os acordos da equipa."],
+ ["Dois jovens discutem porque ambos querem usar o mesmo material. Qual é a tua reação inicial?",
+  "Interrompo a disputa, estabeleço uma regra imediata e faço avançar a atividade.",
+  "Uso humor ou conversa para baixar a tensão e encontrar uma solução que envolva os dois.",
+  "Ouço os dois lados e ajudo-os a reparar a relação antes de retomar a tarefa.",
+  "Verifico a regra de utilização ou a distribuição acordada e aplico um critério claro."],
+ ["No acampamento, falta um objeto importante do material da equipa. O que fazes primeiro?",
+  "Distribuo tarefas e organizo uma procura rápida para resolver o problema.",
+  "Peço ajuda a todos e transformo a procura num esforço coletivo.",
+  "Organizo a equipa para procurar sem acusar ninguém nem aumentar a ansiedade.",
+  "Consulto o inventário, refaço os passos e tento perceber onde o objeto ficou."],
+ ["A previsão do tempo obriga a cancelar uma atividade esperada pelos jovens. Qual é a tua tendência?",
+  "Escolho a alternativa segura e comunico a decisão com clareza.",
+  "Apresento a mudança como uma nova aventura e ajudo o grupo a entusiasmar-se.",
+  "Reconheço a desilusão e acompanho o grupo na adaptação ao novo plano.",
+  "Comparo opções, condições e recursos antes de fechar a alternativa."],
+ ["Um jovem comete um erro à frente da equipa e fica envergonhado. O que surge primeiro em ti?",
+  "Indico objetivamente o que precisa de ser corrigido e o passo seguinte.",
+  "Ajudo a aliviar a vergonha, reforço o que ele conseguiu e convido-o a tentar de novo.",
+  "Dou-lhe espaço, escuto-o e ajudo-o a reparar o erro com tranquilidade.",
+  "Explico o procedimento correto e confirmo que percebeu como evitar o mesmo erro."],
+ ["Um encarregado de educação questiona uma decisão tomada para a atividade. Como reages primeiro?",
+  "Explico a decisão e assumo com firmeza a responsabilidade pela condução da atividade.",
+  "Procuro criar ligação, ouvir a preocupação e explicar a intenção educativa.",
+  "Dou tempo para compreender a inquietação e procuro uma conversa de confiança.",
+  "Reúno a informação e os critérios que sustentaram a decisão antes de responder."],
+ ["No final de uma atividade, o que observas primeiro para perceber como correu?",
+  "Se a equipa cumpriu o objetivo e o que deve fazer a seguir.",
+  "Se os jovens participaram, ganharam energia e viveram uma experiência marcante.",
+  "Se todos se sentiram incluídos, acompanhados e parte do grupo.",
+  "O que correu conforme planeado, o que falhou e o que deve ser ajustado."]
+];
+
+var LETRAS = ["A","B","C","D"];
+var CHAVE = { A:"D", B:"I", C:"S", D:"C" };
+var ESTILOS = {
+  D:{ nome:"Dominante", verbo:"Decide",
+      contributo:"Decide, dá direção, protege limites e mobiliza a ação, especialmente quando há urgência ou segurança em causa.",
+      risco:"Pode assumir tudo, falar de forma brusca, ter pouca paciência ou reduzir a autonomia do guia jovem.",
+      ajuste:"Parar um instante, ouvir a equipa e devolver uma decisão adequada ao nível de experiência do jovem.",
+      pergunta:"Depois de orientar, o que posso devolver?" },
+  I:{ nome:"Influente", verbo:"Mobiliza",
+      contributo:"Cria ligação, entusiasmo, motivação e participação; pode transformar uma dificuldade numa experiência partilhada.",
+      risco:"Pode improvisar demasiado, perder detalhes, prometer mais do que consegue cumprir ou evitar uma conversa difícil.",
+      ajuste:"Fechar a motivação com uma instrução clara, um responsável e um próximo passo.",
+      pergunta:"Ficou claro quem faz o quê?" },
+  S:{ nome:"Estável", verbo:"Sustenta",
+      contributo:"Escuta, dá continuidade, reduz tensão e acompanha quem precisa de mais tempo ou segurança.",
+      risco:"Pode proteger em excesso, adiar limites, evitar confronto necessário ou carregar sozinho o bem-estar de todos.",
+      ajuste:"Dizer o limite com clareza, manter o apoio e permitir que o jovem tente por si.",
+      pergunta:"Consigo apoiar e manter o limite?" },
+  C:{ nome:"Conforme", verbo:"Estrutura",
+      contributo:"Planeia, verifica segurança, cuida do material e dos procedimentos e ajuda a antecipar riscos.",
+      risco:"Pode ficar rígido, focar o erro ou a regra acima da aprendizagem e corrigir em excesso.",
+      ajuste:"Distinguir risco real de preferência pessoal e deixar margem para a iniciativa do jovem.",
+      pergunta:"É risco real ou preferência?" }
+};
+
+/* ============================================================
+   ESTADO
+   ============================================================ */
+var GUARDA = "tdl-teste-v2";
+var estado = { ecra:"inicio", n:0, r:[], id:"", lead:null };
+try { var g = JSON.parse(localStorage.getItem(GUARDA)); if (g && Array.isArray(g.r)) estado = g; } catch(e){}
+function guardar(){ try { localStorage.setItem(GUARDA, JSON.stringify(estado)); } catch(e){} }
+
+var $ = document.getElementById("ecra");
+function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]; }); }
+function ir(ecra){ estado.ecra = ecra; guardar(); desenhar(); window.scrollTo(0,0); }
+
+function contar(){
+  var c = {A:0,B:0,C:0,D:0};
+  estado.r.forEach(function(x){ if (c[x] !== undefined) c[x]++; });
+  return c;
+}
+// estilo(s) com mais respostas; só há mais de um em caso de empate exato
+function resultado(){
+  var c = contar(), max = Math.max(c.A, c.B, c.C, c.D);
+  return { c:c, estilos: LETRAS.filter(function(l){ return c[l] === max; }).map(function(l){ return CHAVE[l]; }) };
+}
+
+function enviar(extra){
+  if (!CONFIG.ENDPOINT || !estado.lead) return Promise.resolve();
+  var d = { id:estado.id, evento:CONFIG.EVENTO, consentimento:"sim" }, k;
+  for (k in estado.lead) d[k] = estado.lead[k];
+  for (k in (extra||{})) d[k] = extra[k];
+  return fetch(CONFIG.ENDPOINT, { method:"POST", mode:"no-cors", keepalive:true,
+    headers:{ "Content-Type":"text/plain;charset=utf-8" }, body:JSON.stringify(d) });
+}
+
+/* ============================================================
+   ECRÃS: início > contacto > 12 perguntas > resultado
+   ============================================================ */
+function desenhar(){
+  if (!estado.lead && estado.ecra !== "inicio") estado.ecra = "contacto";
+  if (estado.ecra === "pergunta" && estado.n >= PERGUNTAS.length) estado.ecra = "resultado";
+  ({inicio:eInicio, contacto:eContacto, pergunta:ePergunta, resultado:eResultado})[estado.ecra]();
+}
+
+function eInicio(){
+  $.innerHTML =
+   '<div class="fio"></div>'+
+   '<h1>Como reages?<br><em>Não como gostarias.</em></h1>'+
+   '<p class="lead">Em cada situação, escolhe a resposta que mais se aproxima da tua <b>primeira reação espontânea</b>. Não a resposta ideal, nem a que achas que o grupo espera.</p>'+
+   '<ul class="pontos">'+
+   '<li><b>12 situações</b> de liderança escutista</li>'+
+   '<li><b>Sem respostas certas</b>: uma opção por situação</li>'+
+   '<li><b>No fim</b>, vês logo o teu resultado</li>'+
+   '</ul>'+
+   '<div class="empurra"></div>'+
+   '<button class="btn" id="b">'+(estado.lead ? "Continuar" : "Começar")+'</button>';
+  document.getElementById("b").onclick = function(){ ir(estado.lead ? "pergunta" : "contacto"); };
+}
+
+function eContacto(){
+  var q = CONFIG.QUALIFICADORA, h = '<form id="f" novalidate>';
+  h += '<div class="fio"></div><p class="rotulo">Antes de começar</p><h2>Os teus dados</h2>';
+  h += '<label for="nome">Nome</label><input type="text" id="nome" autocomplete="name" required>';
+  h += '<label for="email">E-mail</label><input type="email" id="email" autocomplete="email" inputmode="email" required>';
+  h += '<label for="tel">WhatsApp</label><input type="tel" id="tel" autocomplete="tel" inputmode="tel" placeholder="+351" required>';
+  if (q){
+    h += '<label>'+esc(q.pergunta)+'</label><div class="escolhas">';
+    q.opcoes.forEach(function(o){ h += '<label class="escolha"><input type="radio" name="q" value="'+esc(o)+'"><span>'+esc(o)+'</span></label>'; });
+    h += '</div>';
+  }
+  h += '<label class="consente"><input type="checkbox" id="ok"><span>Autorizo a Vera Portela a guardar o meu nome, contactos e o resultado deste exercício, e a contactar-me por e-mail ou WhatsApp sobre o seu trabalho. Posso pedir a remoção dos meus dados a qualquer momento.</span></label>';
+  h += '<p class="erro" id="erro" hidden></p><button class="btn" id="env" type="submit">Começar o teste</button></form>';
+  $.innerHTML = h;
+  var f = document.getElementById("f"), erro = document.getElementById("erro");
+  f.onsubmit = function(ev){
+    ev.preventDefault();
+    var nome = f.nome.value.trim(), email = f.email.value.trim(), tel = f.tel.value.trim();
+    var sel = f.querySelector('input[name=q]:checked');
+    var falta = !nome ? "Escreve o teu nome." :
+                !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) ? "Confirma o e-mail." :
+                tel.replace(/\D/g,"").length < 9 ? "Confirma o número de WhatsApp." :
+                (q && !sel) ? "Escolhe uma opção na pergunta." :
+                !f.ok.checked ? "Para começar, é preciso assinalar a autorização." : "";
+    if (falta){ erro.textContent = falta; erro.hidden = false; return; }
+    estado.id = Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+    estado.lead = { nome:nome, email:email, whatsapp:tel, qualificadora: sel ? sel.value : "" };
+    estado.n = 0; estado.r = [];
+    enviar({ fase:"inicio" }).catch(function(){});   // o contacto fica registado já aqui
+    ir("pergunta");
+  };
+}
+
+function ePergunta(){
+  var n = estado.n, p = PERGUNTAS[n], h = "";
+  h += '<div class="barra"><i style="width:'+Math.round(n/PERGUNTAS.length*100)+'%"></i></div>';
+  h += '<p class="passo">'+(n+1)+' / '+PERGUNTAS.length+'</p>';
+  h += '<h2>'+esc(p[0])+'</h2><div class="opcoes">';
+  for (var i=0;i<4;i++){
+    h += '<button class="op'+(estado.r[n]===LETRAS[i]?" sel":"")+'" data-l="'+LETRAS[i]+'"><b>'+LETRAS[i]+'</b><span>'+esc(p[i+1])+'</span></button>';
+  }
+  h += '</div><div class="nav">'+(n>0?'<button class="link" id="v">Voltar</button>':'<span></span>')+
+       (estado.r[n]?'<button class="link" id="s">Seguinte</button>':'<span></span>')+'</div>';
+  $.innerHTML = h;
+  function avancar(){ estado.n = n+1; if (estado.n >= PERGUNTAS.length) fim(); else ir("pergunta"); }
+  Array.prototype.forEach.call($.querySelectorAll(".op"), function(b){
+    b.onclick = function(){
+      estado.r[n] = b.getAttribute("data-l");
+      Array.prototype.forEach.call($.querySelectorAll(".op"), function(x){ x.classList.toggle("sel", x===b); });
+      guardar();
+      setTimeout(avancar, 220);
+    };
+  });
+  var v = document.getElementById("v"); if (v) v.onclick = function(){ estado.n = n-1; ir("pergunta"); };
+  var s = document.getElementById("s"); if (s) s.onclick = avancar;
+}
+
+function fim(){
+  var R = resultado();
+  enviar({ fase:"fim", resultado:R.estilos.join("+"), A:R.c.A, B:R.c.B, C:R.c.C, D:R.c.D }).catch(function(){});
+  ir("resultado");
+}
+
+function eResultado(){
+  var R = resultado(), h = '<div class="final"><p class="rotulo">O teu resultado</p>';
+  R.estilos.forEach(function(l){
+    h += '<div class="final-letra">'+l+'</div><h1 class="final-nome">'+esc(ESTILOS[l].nome)+'</h1>';
+  });
+  h += '</div>';
+  $.innerHTML = h;
+}
+
+desenhar();
+</script>
+</body>
+</html>
